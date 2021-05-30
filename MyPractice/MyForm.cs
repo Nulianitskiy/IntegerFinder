@@ -19,13 +19,22 @@ namespace MyPractice
             {
                 string func = rtbTable.Text;// строка с функцией
 
-                // переменные, хранящие ответы вызываемых методов
-                double AnsInteger = SimpsonParableIntegral(Convert.ToDouble(tbA.Text), Convert.ToDouble(tbB.Text), Convert.ToDouble(tbN.Text), func);
-                double AnsDich = DichotomyMethod(Convert.ToDouble(tbA.Text), Convert.ToDouble(tbB.Text), Convert.ToDouble(tbEps.Text), func);
+                double n = 1;
+                double a = Convert.ToDouble(tbA.Text);
+                double b = Convert.ToDouble(tbB.Text);
+
+                while (Math.Abs(SimpsonParableIntegral(a, b, 2 * n,func) - SimpsonParableIntegral(a, b, n,func)) / 15 > Convert.ToDouble(tbN.Text)) n *= 2;
+                n *= 2;                                   //Точность для формулы Симпсона (парабол) равна 1/15 (I2n - In)
+
 
                 // вывод ответа
-                label5.Text = "Интегралл = " + AnsInteger.ToString();
-                label6.Text = "Ответ = " + AnsDich.ToString();
+                label5.Text = "Интегралл = " + SimpsonParableIntegral(a, b, n, func).ToString();
+
+
+                if (Eval.Execute<double>(func, new { X = a }) * Eval.Execute<double>(func, new { X = b }) >= 0)
+                    label6.Text = "На данном участке нет ответа";
+                else
+                    label6.Text = "Ответ = " + DichotomyMethod(a, b , Convert.ToDouble(tbEps.Text), func).ToString();
             }
             catch (Exception)// в случае, если вдруг возникнет ошибка
             {
@@ -76,11 +85,12 @@ namespace MyPractice
         /// <returns></returns>
         private double DichotomyMethod(double a, double b, double Eps, string func)
         {
+
             double c = (a + b) / 2;// середина отрезка
 
             while (Math.Abs(a - b) > Eps)// ищем точку с заданной точностью Эпсилон
             {                           // если искомая точка находится правее середины отрезка, то меняем левую границу отрезка на его середину
-                if (Eval.Execute<double>(func, new { X = a }) * Eval.Execute<double>(func, new { X = b }) < 0) b = c; 
+                if (Eval.Execute<double>(func, new { X = a }) * Eval.Execute<double>(func, new { X = c }) < 0) b = c; 
                 else a = c;           // иначе правую границу отрезка на его середину 
 
                 c = (a + b) / 2;// находим новую середину отрезка

@@ -95,9 +95,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 154);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(25, 13);
+            this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Eps";
+            this.label3.Text = "Точность ответа";
             // 
             // label4
             // 
@@ -139,9 +139,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 113);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(115, 13);
+            this.label7.Size = new System.Drawing.Size(109, 13);
             this.label7.TabIndex = 12;
-            this.label7.Text = "Точность интегралла";
+            this.label7.Text = "Точность интеграла";
             // 
             // label1
             // 
